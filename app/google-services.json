@@ -1,0 +1,159 @@
+{
+  "project_info": {
+    "project_number": "206061809813",
+    "firebase_url": "https://auth-82ac8.firebaseio.com",
+    "project_id": "auth-82ac8",
+    "storage_bucket": "auth-82ac8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206061809813:android:31a5b2f2b9589e4ce22b9c",
+        "android_client_info": {
+          "package_name": "com.rivan.auth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206061809813-v0k8e8ign9p8gr7gh7ce65j3ju957pfu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rivan.auth",
+            "certificate_hash": "b7f7ab0091bad8c6d3c29aa6e94ac75cc28f53cf"
+          }
+        },
+        {
+          "client_id": "206061809813-5omqmbs0dgf47j59go63nic91sgs757i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfUQ4rXhTuFvIo012a12LuCQ1XcbUJSKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206061809813-5omqmbs0dgf47j59go63nic91sgs757i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206061809813:android:f871ce17741330d1e22b9c",
+        "android_client_info": {
+          "package_name": "com.rivan.authkotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206061809813-bafq979sjsbkhopis3uit6qinrv41146.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rivan.authkotlin",
+            "certificate_hash": "b7f7ab0091bad8c6d3c29aa6e94ac75cc28f53cf"
+          }
+        },
+        {
+          "client_id": "206061809813-5omqmbs0dgf47j59go63nic91sgs757i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfUQ4rXhTuFvIo012a12LuCQ1XcbUJSKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206061809813-5omqmbs0dgf47j59go63nic91sgs757i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206061809813:android:61e2805b73cee0dae22b9c",
+        "android_client_info": {
+          "package_name": "com.rivan.ujianitrivan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206061809813-91s1vdn2odlbhvu694jn8kictug5ncgj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rivan.ujianitrivan",
+            "certificate_hash": "b7f7ab0091bad8c6d3c29aa6e94ac75cc28f53cf"
+          }
+        },
+        {
+          "client_id": "206061809813-5omqmbs0dgf47j59go63nic91sgs757i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfUQ4rXhTuFvIo012a12LuCQ1XcbUJSKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206061809813-5omqmbs0dgf47j59go63nic91sgs757i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206061809813:android:eee752bbeb9c6f24e22b9c",
+        "android_client_info": {
+          "package_name": "com.rivaphy.chatapps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206061809813-pj302laj0dqdeb5f9utf2fgnrojhac29.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rivaphy.chatapps",
+            "certificate_hash": "b7f7ab0091bad8c6d3c29aa6e94ac75cc28f53cf"
+          }
+        },
+        {
+          "client_id": "206061809813-5omqmbs0dgf47j59go63nic91sgs757i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfUQ4rXhTuFvIo012a12LuCQ1XcbUJSKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206061809813-5omqmbs0dgf47j59go63nic91sgs757i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
