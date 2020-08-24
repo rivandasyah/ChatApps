@@ -15,7 +15,12 @@ import com.google.firebase.database.*
 import com.rivaphy.chatapps.fragment.ChatFragment
 import com.rivaphy.chatapps.fragment.ProfileFragment
 import com.rivaphy.chatapps.fragment.SearchFragment
+import com.rivaphy.chatapps.model.Users
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class MainActivity : AppCompatActivity() {
 
@@ -50,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                 if (countUnreadMessages == 0) {
                     viewPagerAdapter.addFragment(ChatFragment(), "Chats")
                 } else {
-                    viewPagerAdapter.addFragment(ChatFragment(),"($countUnreadMessages) Chats")
+                    viewPagerAdapter.addFragment(ChatFragment(), "($countUnreadMessages) Chats")
                 }
 
                 //buat nge set viewpager + namanya
@@ -58,6 +63,21 @@ class MainActivity : AppCompatActivity() {
                 viewPagerAdapter.addFragment(ProfileFragment(), "Profile")
                 view_pager_main.adapter = viewPagerAdapter
                 tab_layout_main.setupWithViewPager(view_pager_main)
+            }
+        })
+
+        refUsers!!.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val user: Users? = snapshot.getValue(Users::class.java)
+                    tv_username_main.text = user!!.getUsername()
+                    Picasso.get().load(user.getProfile())
+                        .placeholder(R.drawable.ic_profile).into(iv_image_main)
+                }
             }
         })
     }
@@ -111,5 +131,25 @@ class MainActivity : AppCompatActivity() {
         }
 
         return false
+    }
+
+    //sebuah penampung untuk status off atau on (line)
+    private fun updateStatus(status: String) {
+        val ref = FirebaseDatabase.getInstance()
+            .reference.child("Users").child(firebaseUser!!.uid)
+        val hash = HashMap<String, Any>()
+        hash["status"] = status
+        ref!!.updateChildren(hash)
+    }
+
+    //untuk membaca state kesuluruhan status
+    override fun onResume() {
+        super.onResume()
+        updateStatus("online")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        updateStatus("offline")
     }
 }
