@@ -16,4 +16,7 @@
     <string name="sign_out">Sign Out</string>
     <string name="not_null">Tidak boleh kosong</string>
     <string name="err">Message Error</string>
+    <string name="text_last_message">Last Message</string>
+    <string name="no_message">No Message</string>
+    <string name="send_message">Image Sent</string>
 </resources>
