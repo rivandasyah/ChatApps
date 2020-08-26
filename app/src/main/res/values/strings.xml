@@ -19,4 +19,5 @@
     <string name="text_last_message">Last Message</string>
     <string name="no_message">No Message</string>
     <string name="send_message">Image Sent</string>
+    <string name="message_send">Send Message</string>
 </resources>
