@@ -2,6 +2,8 @@ package com.rivaphy.chatapps.adapter
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +15,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.rivaphy.chatapps.ChatActivity
 import com.rivaphy.chatapps.R
+import com.rivaphy.chatapps.VisitProfileActivity
 import com.rivaphy.chatapps.model.Chat
 import com.rivaphy.chatapps.model.Users
 import com.squareup.picasso.Picasso
@@ -74,9 +78,24 @@ class UserAdapter(mContext: Context, mUsers: List<Users>, isChatcheck: Boolean) 
         holder.itemView.setOnClickListener {
             val options = arrayOf<CharSequence>("Sent Message", "Visit Profile")
             val builder: AlertDialog.Builder = AlertDialog.Builder(mContext)
-//            builder.setItems(options, {
-//                //isi menunya
-//            })
+
+            //apa yang kita lakukan ketika itemView nya di klik
+            builder.setItems(options, DialogInterface.OnClickListener { dialog, position ->
+                if (position == 0) {
+                    //nanti bakalan nempel kemana
+                    val intent = Intent(mContext, ChatActivity::class.java)
+                    intent.putExtra("visit_id", users.getUID())
+                    mContext.startActivity(intent)
+                }
+
+                if (position == 1) {
+                    val intent = Intent(mContext, VisitProfileActivity::class.java)
+                    intent.putExtra("visit_id", users.getUID())
+                    mContext.startActivity(intent)
+                }
+            })
+
+            builder.show()
         }
     }
 
