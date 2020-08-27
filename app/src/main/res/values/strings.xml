@@ -20,4 +20,7 @@
     <string name="no_message">No Message</string>
     <string name="send_message">Image Sent</string>
     <string name="message_send">Send Message</string>
+    <string name="content_description">Content Description</string>
+    <string name="message">write message here. . . ,</string>
+    <string name="builder_ask">What do you want ?</string>
 </resources>
