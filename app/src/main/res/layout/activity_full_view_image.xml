@@ -6,4 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".FullViewImageActivity">
 
+    <ImageView
+        android:id="@+id/iv_full_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/content_description"
+        app:srcCompat="@drawable/profile" />
 </androidx.constraintlayout.widget.ConstraintLayout>

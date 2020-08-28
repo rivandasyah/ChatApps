@@ -9,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.FirebaseDatabase
 import com.rivaphy.chatapps.FullViewImageActivity
 import com.rivaphy.chatapps.R
 import com.rivaphy.chatapps.model.Chat
@@ -34,14 +36,15 @@ class ChatAdapter(mContext: Context, mChatList: List<Chat>, imageUrl: String) :
 
     //adapter ini dipake dua layour
     override fun onBindViewHolder(holder: ChatAdapter.ViewHolder, position: Int) {
-        val chat : Chat = mChatList[position]
+        val chat: Chat = mChatList[position]
         Picasso.get().load(imgUrl).into(holder.profile_image)
 
         //kalo misalkan pesan berupa image
         if (chat.getMessage().equals(mContext.getString(R.string.send_message)) &&
-            !chat.getUrl().equals(""))
+            !chat.getUrl().equals("")
+        )
 
-            //imagenya by right side
+        //imagenya by right side
             if (chat.getSender().equals(firebaseUser!!.uid)) {
                 holder.show_text_message!!.visibility = View.GONE
                 holder.right_image_view!!.visibility = View.VISIBLE
@@ -56,8 +59,7 @@ class ChatAdapter(mContext: Context, mChatList: List<Chat>, imageUrl: String) :
 
                     var builder: AlertDialog.Builder = AlertDialog.Builder(holder.itemView.context)
                     builder.setTitle(mContext.getString(R.string.builder_ask))
-                    builder.setItems(options, DialogInterface.OnClickListener {
-                        dialog, which ->
+                    builder.setItems(options, DialogInterface.OnClickListener { dialog, which ->
                         if (which == 0) {
                             val intent = Intent(mContext, FullViewImageActivity::class.java)
                             intent.putExtra("url", chat.getUrl())
@@ -66,14 +68,23 @@ class ChatAdapter(mContext: Context, mChatList: List<Chat>, imageUrl: String) :
                             deleteSentMessage(position, holder)
                         }
                     })
-
                     builder.show()
                 }
             }
     }
 
     private fun deleteSentMessage(position: Int, holder: ChatAdapter.ViewHolder) {
-
+        val ref = FirebaseDatabase.getInstance().reference.child("Chats")
+            .child(mChatList.get(position).getMessageId()!!)
+            .removeValue()
+            .addOnCompleteListener {
+                task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(holder.itemView.context, mContext.getString(R.string.text_delete), Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(holder.itemView.context, mContext.getString(R.string.text_failed), Toast.LENGTH_LONG).show()
+                }
+            }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatAdapter.ViewHolder {
