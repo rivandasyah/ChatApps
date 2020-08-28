@@ -23,4 +23,6 @@
     <string name="content_description">Content Description</string>
     <string name="message">write message here. . . ,</string>
     <string name="builder_ask">What do you want ?</string>
+    <string name="text_delete">Deleted</string>
+    <string name="text_failed">Failed, Not deleted</string>
 </resources>
