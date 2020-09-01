@@ -25,4 +25,5 @@
     <string name="builder_ask">What do you want ?</string>
     <string name="text_delete">Deleted</string>
     <string name="text_failed">Failed, Not deleted</string>
+    <string name="message_notif">write your message first!</string>
 </resources>
