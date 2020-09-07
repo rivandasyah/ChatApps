@@ -99,7 +99,7 @@
                 android:id="@+id/iv_ig_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="158dp"
+                android:layout_marginEnd="112dp"
                 android:contentDescription="@string/content_description"
                 android:src="@drawable/instagram"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_fb_profile"
