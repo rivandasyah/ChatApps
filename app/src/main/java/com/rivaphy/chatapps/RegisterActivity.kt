@@ -3,6 +3,8 @@ package com.rivaphy.chatapps
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
+import android.webkit.WebView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -22,14 +24,14 @@ class RegisterActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
 
         //untuk toolbar
-        setSupportActionBar(toolbar_register)
-        supportActionBar!!.title = getString(R.string.text_register) //buat set nama toolbar
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true) //buat back ke welcome activity
-        toolbar_register.setNavigationOnClickListener {
-            val intentToWelcome = Intent(this, WelcomeActivity::class.java)
-            startActivity(intentToWelcome)
-            finish()
-        }
+//        setSupportActionBar(toolbar_register)
+//        supportActionBar!!.title = getString(R.string.text_register) //buat set nama toolbar
+//        supportActionBar!!.setDisplayHomeAsUpEnabled(true) //buat back ke welcome activity
+//        toolbar_register.setNavigationOnClickListener {
+//            val intentToWelcome = Intent(this, WelcomeActivity::class.java)
+//            startActivity(intentToWelcome)
+//            finish()
+//        }
 
         btn_register.setOnClickListener {
             registerUser()
@@ -55,7 +57,8 @@ class RegisterActivity : AppCompatActivity() {
             //isinya nanti authentication and post data ke firebase
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    firebaseUID = mAuth.currentUser!!.uid //dikasih !! biar nggak error 404 di firebase nya
+                    firebaseUID =
+                        mAuth.currentUser!!.uid //dikasih !! biar nggak error 404 di firebase nya
                     //ini kayak buat table di firebasenya
                     refUsers = FirebaseDatabase.getInstance().reference
                         .child("Users").child(firebaseUID)
@@ -85,8 +88,10 @@ class RegisterActivity : AppCompatActivity() {
                     }
 
                 } else { //kalo gagal
-                    Toast.makeText(this, "Error Message : " +
-                            task.exception!!.message.toString(), Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this, "Error Message : " +
+                                task.exception!!.message.toString(), Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }

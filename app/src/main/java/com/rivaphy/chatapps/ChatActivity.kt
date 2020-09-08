@@ -20,10 +20,13 @@ import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import com.rivaphy.chatapps.adapter.ChatAdapter
 import com.rivaphy.chatapps.model.*
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.activity_visit_profile.*
 import kotlinx.android.synthetic.main.keft_chat_item.*
+import retrofit2.Call
+import retrofit2.Response
 
 class ChatActivity : AppCompatActivity() {
 
@@ -35,7 +38,7 @@ class ChatActivity : AppCompatActivity() {
     var reference: DatabaseReference? = null
 
     var notify = false
-    var api: ApiService? = null
+    var apiService: ApiService? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +50,10 @@ class ChatActivity : AppCompatActivity() {
         toolbar_chat.setNavigationOnClickListener {
             finish()
         }
+
+        apiService = Client.Client.getClient(
+            "http://fcm.googleapis.com/"
+        )!!.create(ApiService::class.java)
 
         intent = intent
         userIdVisit = intent.getStringExtra("visit_id")
@@ -204,8 +211,25 @@ class ChatActivity : AppCompatActivity() {
                         "New Message", userIdVisit
                     )
 
-                    //nggak muncul token responsnya
-//                    val sender = Sender(data!!.token!!.getToken().toString)
+                    val sender = Sender(data!!, token!!.getToken().toString())
+                    apiService!!.sendNotif(sender).enqueue(object : retrofit2.Callback<MyResponse> {
+                        override fun onFailure(call: Call<MyResponse>, t: Throwable) {
+
+                        }
+
+                        override fun onResponse(
+                            call: Call<MyResponse>,
+                            response: Response<MyResponse>
+                        ) {
+                            if (response.code() == 200) {
+                                if (response.body()!!.success !== 1) {
+                                    Toast.makeText(this@ChatActivity, "Failed",
+                                        Toast.LENGTH_LONG).show()
+                                }
+                            }
+                        }
+
+                    })
                 }
             }
         })
