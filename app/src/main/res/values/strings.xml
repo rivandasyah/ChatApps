@@ -26,4 +26,7 @@
     <string name="text_delete">Deleted</string>
     <string name="text_failed">Failed, Not deleted</string>
     <string name="message_notif">write your message first!</string>
+    <string name="hello_">Hello,</string>
+    <string name="text_create_your_account_here">Create Your Account Here</string>
+
 </resources>
