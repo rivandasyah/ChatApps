@@ -64,6 +64,35 @@ class SearchFragment : Fragment() {
         return view
     }
 
+    private fun getAllUsers() {
+
+        //mengenali uid variable yang berisi uid & variable untuk nge get table users
+        var firebaseUserID = FirebaseAuth.getInstance().currentUser!!.uid //untuk mengetahui siapa login disana
+        val refUsers = FirebaseDatabase.getInstance().reference.child("Users")
+
+        //eventListener
+        refUsers.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshots: DataSnapshot) {
+                (user as ArrayList<Users>).clear()
+                if (editSearch!!.text.toString() == "")
+                    for (snapshot in snapshots.children) {
+                        val users: Users? = snapshot.getValue(Users::class.java)
+                        if (!(users!!.getUID()).equals(firebaseUserID)) {
+                            (user as ArrayList<Users>).add(users)
+                        }
+                    }
+                userAdapter = UserAdapter(context!!, user!!, false)
+                rv_search.adapter = userAdapter
+            }
+
+        })
+
+    }
+
     private fun searchForUser(str: String) {
         //variable untuk menampung currentUser
         var firebaseUserID = FirebaseAuth.getInstance().currentUser!!.uid
@@ -92,35 +121,6 @@ class SearchFragment : Fragment() {
 
         })
 
-
-    }
-
-    private fun getAllUsers() {
-
-        //mengenali uid variable yang berisi uid & variable untuk nge get table users
-        var firebaseUserID = FirebaseAuth.getInstance().currentUser!!.uid //untuk mengetahui siapa login disana
-        val refUsers = FirebaseDatabase.getInstance().reference.child("Users")
-
-        //eventListener
-        refUsers.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-            override fun onDataChange(snapshots: DataSnapshot) {
-                (user as ArrayList<Users>).clear()
-                if (editSearch!!.text.toString() == "")
-                    for (snapshot in snapshots.children) {
-                        val users: Users? = snapshot.getValue(Users::class.java)
-                        if (!(users!!.getUID()).equals(firebaseUserID)) {
-                            (user as ArrayList<Users>).add(users)
-                        }
-                    }
-                userAdapter = UserAdapter(context!!, user!!, false)
-                rv_search.adapter = userAdapter
-            }
-
-        })
 
     }
 

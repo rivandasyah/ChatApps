@@ -1,4 +1,4 @@
-package com.rivaphy.chatapps.model
+package com.rivaphy.chatapps.notifications
 
 import android.app.Notification
 import android.app.NotificationManager
@@ -89,7 +89,8 @@ class MyFirebaseMessaging : FirebaseMessagingService() {
         val pendingIntent =
             PendingIntent.getActivity(this, reg, intent, PendingIntent.FLAG_ONE_SHOT)
         val defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val oreoNotification = OreoNotification(this)
+        val oreoNotification =
+            OreoNotification(this)
         val builder: Notification.Builder = oreoNotification.getOreoNotification(title, body, pendingIntent, defaultSound, icon)
 
         var i = 0

@@ -1,7 +1,6 @@
 package com.rivaphy.chatapps.fragment
 
 
-import android.media.session.MediaSession
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,11 +18,9 @@ import com.google.firebase.iid.FirebaseInstanceId
 
 import com.rivaphy.chatapps.R
 import com.rivaphy.chatapps.adapter.UserAdapter
-import com.rivaphy.chatapps.model.Chat
 import com.rivaphy.chatapps.model.ChatList
-import com.rivaphy.chatapps.model.Token
+import com.rivaphy.chatapps.notifications.Token
 import com.rivaphy.chatapps.model.Users
-import java.util.*
 import kotlin.collections.ArrayList
 
 /**
@@ -51,7 +48,7 @@ class ChatFragment : Fragment() {
         firebaseUser = FirebaseAuth.getInstance().currentUser
         usersChatList = ArrayList()
 
-        val ref = FirebaseDatabase.getInstance().reference.child("ChatList")
+        val ref = FirebaseDatabase.getInstance().reference.child("ChatList").child(firebaseUser!!.uid)
         ref!!.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
             }

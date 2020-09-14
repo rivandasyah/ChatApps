@@ -1,4 +1,4 @@
-package com.rivaphy.chatapps.model
+package com.rivaphy.chatapps.notifications
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
