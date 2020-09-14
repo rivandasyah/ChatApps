@@ -34,7 +34,7 @@
             android:name=".MainActivity"/>
 
         <service
-            android:name=".model.MyFirebaseMessaging"
+            android:name=".notifications.MyFirebaseMessaging"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -42,7 +42,7 @@
         </service>
 
         <service
-            android:name=".model.MyFirebaseInstanceId"
+            android:name=".notifications.MyFirebaseInstanceId"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

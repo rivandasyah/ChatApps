@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,12 +18,11 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import com.rivaphy.chatapps.adapter.ChatAdapter
+import com.rivaphy.chatapps.fragment.ApiService
 import com.rivaphy.chatapps.model.*
-import com.squareup.picasso.Callback
+import com.rivaphy.chatapps.notifications.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_chat.*
-import kotlinx.android.synthetic.main.activity_visit_profile.*
-import kotlinx.android.synthetic.main.keft_chat_item.*
 import retrofit2.Call
 import retrofit2.Response
 
@@ -110,30 +108,6 @@ class ChatActivity : AppCompatActivity() {
         seenMessage(userIdVisit)
     }
 
-    var seenListener: ValueEventListener? = null
-    //udah dibaca atau belum, mirip sama checklist di wa tapi ini bentuknya tulisan
-    private fun seenMessage(userIdVisit: String) {
-        val reference = FirebaseDatabase.getInstance().reference.child("Chats")
-        seenListener = reference.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (dataSnapshot in snapshot.children) {
-                    val chat = dataSnapshot.getValue(Chat::class.java)
-                    if (chat!!.getReceiver().equals(firebaseUser!!.uid) &&
-                        chat!!.getSender().equals(userIdVisit)
-                    ) {
-                        val hashMap = HashMap<String, Any>()
-                        hashMap["isseen"] = true
-                        dataSnapshot.ref.updateChildren(hashMap)
-                    }
-                }
-            }
-        })
-    }
-
     private fun sendMessage(senderId: String, receiverId: String?, message: String) {
         val reference = FirebaseDatabase.getInstance().reference
         val messageKey = reference.push().key
@@ -205,13 +179,18 @@ class ChatActivity : AppCompatActivity() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (dataSnapshot in snapshot.children) {
-                    val token: Token? = dataSnapshot.getValue(Token::class.java)
+                    val token: Token? = dataSnapshot.getValue(
+                        Token::class.java
+                    )
                     val data = Data(
                         firebaseUser!!.uid, R.mipmap.ic_launcher, "$username: $message",
                         "New Message", userIdVisit
                     )
 
-                    val sender = Sender(data!!, token!!.getToken().toString())
+                    val sender = Sender(
+                        data!!,
+                        token!!.getToken().toString()
+                    )
                     apiService!!.sendNotif(sender).enqueue(object : retrofit2.Callback<MyResponse> {
                         override fun onFailure(call: Call<MyResponse>, t: Throwable) {
 
@@ -223,8 +202,10 @@ class ChatActivity : AppCompatActivity() {
                         ) {
                             if (response.code() == 200) {
                                 if (response.body()!!.success !== 1) {
-                                    Toast.makeText(this@ChatActivity, "Failed",
-                                        Toast.LENGTH_LONG).show()
+                                    Toast.makeText(
+                                        this@ChatActivity, "Failed",
+                                        Toast.LENGTH_LONG
+                                    ).show()
                                 }
                             }
                         }
@@ -232,6 +213,7 @@ class ChatActivity : AppCompatActivity() {
                     })
                 }
             }
+
         })
 
     }
@@ -309,11 +291,6 @@ class ChatActivity : AppCompatActivity() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        reference!!.removeEventListener(seenListener!!)
-    }
-
     private fun retrieveMessage(senderId: String, receiverId: String?, profile: String?) {
         chatList = ArrayList()
         val reference = FirebaseDatabase.getInstance().reference.child("Chats")
@@ -326,7 +303,8 @@ class ChatActivity : AppCompatActivity() {
                 (chatList as ArrayList<Chat>).clear()
                 for (snapshot in snapshots.children) {
                     val chat = snapshot.getValue(Chat::class.java)
-                    if (chat!!.getReceiver().equals(senderId) && chat.getSender().equals(receiverId) ||
+                    if (chat!!.getReceiver().equals(senderId) && chat.getSender()
+                            .equals(receiverId) ||
                         chat.getReceiver().equals(receiverId) && chat.getSender().equals(senderId)
                     ) {
                         (chatList as ArrayList<Chat>).add(chat)
@@ -340,5 +318,35 @@ class ChatActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    var seenListener: ValueEventListener? = null
+
+    //udah dibaca atau belum, mirip sama checklist di wa tapi ini bentuknya tulisan
+    private fun seenMessage(userIdVisit: String) {
+        val reference = FirebaseDatabase.getInstance().reference.child("Chats")
+        seenListener = reference.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dataSnapshot in snapshot.children) {
+                    val chat = dataSnapshot.getValue(Chat::class.java)
+                    if (chat!!.getReceiver().equals(firebaseUser!!.uid) &&
+                        chat!!.getSender().equals(userIdVisit)
+                    ) {
+                        val hashMap = HashMap<String, Any>()
+                        hashMap["isseen"] = true
+                        dataSnapshot.ref.updateChildren(hashMap)
+                    }
+                }
+            }
+        })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        reference!!.removeEventListener(seenListener!!)
     }
 }

@@ -1,4 +1,4 @@
-package com.rivaphy.chatapps.model
+package com.rivaphy.chatapps.notifications
 
 class Data {
 

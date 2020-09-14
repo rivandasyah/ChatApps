@@ -1,4 +1,4 @@
-package com.rivaphy.chatapps.model
+package com.rivaphy.chatapps.notifications
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

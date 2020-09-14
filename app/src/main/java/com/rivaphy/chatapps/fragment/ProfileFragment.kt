@@ -84,6 +84,16 @@ class ProfileFragment : Fragment() {
             socialChecker = "facebook"
             setSocialLinks()
         }
+
+        view.iv_ig_profile.setOnClickListener {
+            socialChecker = "instagram"
+            setSocialLinks()
+        }
+
+        view.iv_website_profile.setOnClickListener {
+            socialChecker = "website"
+            setSocialLinks()
+        }
         return view
     }
 

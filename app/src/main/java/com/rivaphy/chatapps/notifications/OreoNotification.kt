@@ -1,4 +1,4 @@
-package com.rivaphy.chatapps.model
+package com.rivaphy.chatapps.notifications
 
 import android.annotation.TargetApi
 import android.app.Notification
@@ -27,7 +27,9 @@ class OreoNotification(base: Context?): ContextWrapper(base) {
 
     @TargetApi(Build.VERSION_CODES.O)
     private fun createChannel() {
-        val channel = NotificationChannel(Channel_ID, Channel_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+        val channel = NotificationChannel(
+            Channel_ID,
+            Channel_NAME, NotificationManager.IMPORTANCE_DEFAULT)
         channel.enableLights(false)
         channel.enableVibration(true)
         channel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
@@ -50,7 +52,9 @@ class OreoNotification(base: Context?): ContextWrapper(base) {
         soundUri : Uri?,
         icon: String?
     ) : Notification.Builder{
-        return Notification.Builder(applicationContext, Channel_ID)
+        return Notification.Builder(applicationContext,
+            Channel_ID
+        )
             .setContentIntent(pendingIntent)
             .setContentTitle(title)
             .setContentText(body)

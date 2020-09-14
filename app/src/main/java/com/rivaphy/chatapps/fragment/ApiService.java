@@ -1,4 +1,7 @@
-package com.rivaphy.chatapps.model;
+package com.rivaphy.chatapps.fragment;
+
+import com.rivaphy.chatapps.notifications.MyResponse;
+import com.rivaphy.chatapps.notifications.Sender;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

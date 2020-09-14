@@ -59,7 +59,7 @@ class UserAdapter(mContext: Context, mUsers: List<Users>, isChatcheck: Boolean) 
         if (isChatcheck) {
             retrieveLastMessage(users.getUID(), holder.lastMessage)
         } else {
-
+            holder.lastMessage.visibility = View.GONE
         }
 
         //buat kalo statusnya online
@@ -67,8 +67,10 @@ class UserAdapter(mContext: Context, mUsers: List<Users>, isChatcheck: Boolean) 
             if (users.getStatus() == "online") {
                 holder.online.visibility = View.VISIBLE
                 holder.offline.visibility = View.GONE
+            } else {
+                holder.online.visibility = View.GONE
+                holder.offline.visibility = View.VISIBLE
             }
-
         } else {
             holder.online.visibility = View.GONE
             holder.offline.visibility = View.VISIBLE
@@ -78,6 +80,7 @@ class UserAdapter(mContext: Context, mUsers: List<Users>, isChatcheck: Boolean) 
         holder.itemView.setOnClickListener {
             val options = arrayOf<CharSequence>("Sent Message", "Visit Profile")
             val builder: AlertDialog.Builder = AlertDialog.Builder(mContext)
+            builder.setTitle("What do you want?")
 
             //apa yang kita lakukan ketika itemView nya di klik
             builder.setItems(options, DialogInterface.OnClickListener { dialog, position ->
@@ -99,8 +102,25 @@ class UserAdapter(mContext: Context, mUsers: List<Users>, isChatcheck: Boolean) 
         }
     }
 
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var username: TextView
+        var profile: CircleImageView
+        var online: CircleImageView
+        var offline: CircleImageView
+        var lastMessage: TextView
+
+        init {
+            username = itemView.findViewById(R.id.tv_user_search)
+            profile = itemView.findViewById(R.id.iv_profile_search)
+            online = itemView.findViewById(R.id.iv_online_search)
+            offline = itemView.findViewById(R.id.iv_offline_search)
+            lastMessage = itemView.findViewById(R.id.tv_last_message_search)
+        }
+    }
+
     private fun retrieveLastMessage(uid: String?, lastMessages: TextView) {
         lastMessage = "defaultMessage"
+
         val firebaseUser = FirebaseAuth.getInstance().currentUser
         val reference = FirebaseDatabase.getInstance().reference.child("Chats")
 
@@ -133,22 +153,6 @@ class UserAdapter(mContext: Context, mUsers: List<Users>, isChatcheck: Boolean) 
             }
 
         })
-    }
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var username: TextView
-        var profile: CircleImageView
-        var online: CircleImageView
-        var offline: CircleImageView
-        var lastMessage: TextView
-
-        init {
-            username = itemView.findViewById(R.id.tv_user_search)
-            profile = itemView.findViewById(R.id.iv_profile_search)
-            online = itemView.findViewById(R.id.iv_online_search)
-            offline = itemView.findViewById(R.id.iv_offline_search)
-            lastMessage = itemView.findViewById(R.id.tv_last_message_search)
-        }
     }
 
 }
